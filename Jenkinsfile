@@ -1,18 +1,21 @@
 node{
 		
-     stage('GET DATA') {
-	      //TODO	
+     stage('DATA ACQUISITION') {
+	      echo "DATA ACQUISITION"	
      }
       
-     stage('RUN RECON-ALL TASK') {
-	      //TODO	
+     stage('RECON-ALL TASK') {
+	    
+	    sshagent(['id_rsa_fsf']) {        
+            sh 'ssh root@192.168.17.132'     
+        }	
      }
       
      stage('DELIVERY RESULT') {
-	      //TODO	
+	      echo "DELIVERY RESULT"	
      }
       
      stage('NOTIFICATION') {
-	     //TODO	
+	 	 echo "NOTIFICATION"	   
      }
 }
