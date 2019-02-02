@@ -1,17 +1,16 @@
 node{
 		
+     //Read new task data
+	 echo "Reading the task data"
+     def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task2.xml"
+	 def parser = new XmlParser().parseText(tast_xml)
+	 def JOB_NAME = "${parser.attribute("job_name")}"
+	 def BUILD_ID ="${parser.attribute("build")}"
+	 def OWNER ="${parser.attribute("owner_task")}"
+	 def SUBJECT="${parser.attribute("subject")}"
+	 def FSF_SUBJECT="${parser.attribute("fsf_output")}"
+     
      stage('DATA ACQUISITION') {
-		
-		//Read new task data
-		echo "Reading the task data"
-		def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task2.xml"
-		def parser = new XmlParser().parseText(tast_xml)
-		def JOB_NAME = "${parser.attribute("job_name")}"
-		def BUILD_ID ="${parser.attribute("build")}"
-		def OWNER ="${parser.attribute("owner_task")}"
-		def SUBJECT="${parser.attribute("subject")}"
-		def FSF_SUBJECT="${parser.attribute("fsf_output")}"
-		
 		//Setting Build
 		currentBuild.displayName = "BUILD# $BUILD_ID- $OWNER"  
 		
@@ -23,13 +22,16 @@ node{
         }
      }
       
-     stage('DATA PROCESSING recon-all') {
+     stage('DATA PROCESSING') {
+     
+        def test="sample-001.nii.gz"
 	    
-	    echo "Connecting to Freesuefer server"
+	    echo "Connecting to Freesuefer server and execute recon-all task"
 	    sshagent(['id_rsa_fsf']) {        
-	    
-            sh 'ssh root@192.168.17.132'     
-            
+			sh "ssh export FREESURFER_HOME=/usr/local/freesurfer"
+			sh "ssh source $FREESURFER_HOME/SetUpFreeSurfer.sh"
+			sh "ssh export SUBJECTS_DIR=$FREESURFER_HOME/subjects"
+			sh "ssh recon-all -i $SUBJECT -s $test -all -gCache -3T"     
         }
                 	
      }
