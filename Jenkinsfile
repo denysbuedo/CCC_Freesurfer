@@ -4,18 +4,20 @@ node{
 	      
 	      echo "DATA ACQUISITION"
 	      
-	      def task = "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml"
-	      
+	      def task = new File ("/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml")
+	      def pomFile = new XmlSlurper().parse(file)
+	      def pomModules = pomFile.modules.children().join(",")
+    	  	      
 	      if (fileExists (task)){
 	      	echo task
 	      }
 	      else {
-	      	echo "There're not taks pending"
+	      	error("${task} still missing. Will now fail the job.")
 	      }
 	      	
      }
       
-     stage('RECON-ALL TASK') {
+     stage('DATA PROCESSING-recon-all') {
 	    
 	    echo "Connecting to Freesuefer server"
 	    
@@ -24,11 +26,10 @@ node{
             sh 'ssh root@192.168.17.132'     
             
         }
-        
-        	
+                	
      }
       
-     stage('DELIVERY RESULT') {
+     stage('DATA STORAGED') {
 	      echo "DELIVERY RESULT"	
      }
       
