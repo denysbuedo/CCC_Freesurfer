@@ -28,7 +28,7 @@ node{
 	    
 	    echo "Connecting to Freesuefer server and execute recon-all task"
 	    sshagent(['id_rsa_fsf']) {        
-			sh "ssh sh /FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"
+			sh "ssh sh root@192.168.17.132:/FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"
         }
                 	
      }
