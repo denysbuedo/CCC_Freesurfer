@@ -18,20 +18,18 @@ node{
 		echo "Connecting to freesurfer server to copy subject file"
 		sshagent(['id_rsa_fsf']) {      
 			def subject_data = new File ("$JENKINS_HOME/workspace/$JOB_NAME/subject_file") 
-			def test="sample-001.nii.gz" 
 			sh "scp $subject_data root@192.168.17.132:/usr/local/freesurfer/subjects/"
-			sh "ssh sh root@192.168.17.132:/FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"
+			//sh "ssh sh root@192.168.17.132:/FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"			
         }
      }
       
      stage('DATA PROCESSING') {
      
-       /* 
 	    echo "Connecting to Freesuefer server and execute recon-all task"
-	    sshagent(['id_rsa_fsf']) {        
-			sh "ssh sh root@192.168.17.132:/FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"
+	    sshagent(['id_rsa_fsf']) {  
+	    	def test="sample-001.nii.gz"      
+			sh "ssh root@192.168.17.132:/FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"
         }
-        */        	
      }
       
      stage('DATA STORAGED') {
