@@ -28,10 +28,7 @@ node{
 	    
 	    echo "Connecting to Freesuefer server and execute recon-all task"
 	    sshagent(['id_rsa_fsf']) {        
-			sh "ssh export FREESURFER_HOME=/usr/local/freesurfer"
-			sh "ssh source $FREESURFER_HOME/SetUpFreeSurfer.sh"
-			sh "ssh export SUBJECTS_DIR=$FREESURFER_HOME/subjects"
-			sh "ssh recon-all -i $SUBJECT -s $test -all -gCache -3T"     
+			sh "ssh sh /FREESURFER_HOME/RunFreeSurfer_eApp.sh $test $FSF_SUBJECT"
         }
                 	
      }
