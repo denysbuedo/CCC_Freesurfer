@@ -3,24 +3,20 @@ node{
      stage('DATA ACQUISITION') {
 	      
 	      echo "DATA ACQUISITION"
-	      /*
-	           
-	      def pomFile = new XmlSlurper().parse(file)
-	      def pomModules = pomFile.modules.children().join(",")
-    	  
-    	  */
-    	  
-    	  //def task = new File ("/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml")
-    	  def settings = load("/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml")
-    	  //echo "floopi: ${settings.floopi}"
-    	  	      
-	      if (fileExists (task)){
-	      	echo task
+	      
+	      def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task2.xml"
+   		  
+   		  if (fileExists (tast_xml)){
+	      	def parser = new XmlParser().parseText(xml)
+            def BUILD_ID ="${parser.attribute("build")}"
+            def OWNER ="${parser.attribute("owner")}"
+            def SUBJECT="${parser.attribute("subject")}"
+            def FSF_SUBJECT="${parser.attribute("fsf_output")}"
 	      }
+	      
 	      else {
 	      	error("${task} still missing. Will now fail the job.")
 	      }
-	      	
      }
       
      stage('DATA PROCESSING-recon-all') {
