@@ -1,24 +1,21 @@
 node{
 		
      stage('DATA ACQUISITION') {
-	      
-	      echo "DATA ACQUISITION"
-	      
-	      def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task2.xml"
-   		  
-   		  if (fileExists (tast_xml)){
-   		  
-	      	def parser = new XmlParser().parseText(xml)
-            def BUILD_ID ="${parser.attribute("build")}"
-            def OWNER ="${parser.attribute("owber_task")}"
-            def SUBJECT="${parser.attribute("subject")}"
-            def FSF_SUBJECT="${parser.attribute("fsf_output")}"
-            
-	      }
-	      
-	      else {
-	      	echo "Will now fail the job."
-	      }
+		
+		//Read new task data
+		echo "Reading the task data"
+		def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task2.xml"
+		def parser = new XmlParser().parseText(xml)
+		def BUILD_ID ="${parser.attribute("build")}"
+		def OWNER ="${parser.attribute("owber_task")}"
+		def SUBJECT="${parser.attribute("subject")}"
+		def FSF_SUBJECT="${parser.attribute("fsf_output")}"
+		
+		//Copy de Sugject file to SUBJECT_DIR in Freesuerfer Server
+		echo "Connecting to freesurfer server to copy subject file"
+		sshagent(['id_rsa_fsf']) {        
+			
+        }
      }
       
      stage('DATA PROCESSING-recon-all') {
