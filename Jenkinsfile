@@ -7,15 +7,17 @@ node{
 	      def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task2.xml"
    		  
    		  if (fileExists (tast_xml)){
+   		  
 	      	def parser = new XmlParser().parseText(xml)
             def BUILD_ID ="${parser.attribute("build")}"
-            def OWNER ="${parser.attribute("owner")}"
+            def OWNER ="${parser.attribute("owber_task")}"
             def SUBJECT="${parser.attribute("subject")}"
             def FSF_SUBJECT="${parser.attribute("fsf_output")}"
+            
 	      }
 	      
 	      else {
-	      	error("${task} still missing. Will now fail the job.")
+	      	echo "Will now fail the job."
 	      }
      }
       
