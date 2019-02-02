@@ -8,12 +8,12 @@ node{
 		def parser = new XmlParser().parseText(tast_xml)
 		def JOB_NAME = "${parser.attribute("job_name")}"
 		def BUILD_ID ="${parser.attribute("build")}"
-		def OWNER ="${parser.attribute("owber_task")}"
+		def OWNER ="${parser.attribute("owner_task")}"
 		def SUBJECT="${parser.attribute("subject")}"
 		def FSF_SUBJECT="${parser.attribute("fsf_output")}"
 		
 		//Setting Build
-		currentBuild.displayName = "BUILD #: $BUILD_ID-$OWNER"  
+		currentBuild.displayName = "BUILD# $BUILD_ID- $OWNER"  
 		
 		//Copy de Subject file to SUBJECT_DIR in Freesuerfer Server
 		echo "Connecting to freesurfer server to copy subject file"
