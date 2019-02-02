@@ -3,10 +3,16 @@ node{
      stage('DATA ACQUISITION') {
 	      
 	      echo "DATA ACQUISITION"
-	      
-	      def task = new File ("/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml")
+	      /*
+	           
 	      def pomFile = new XmlSlurper().parse(file)
 	      def pomModules = pomFile.modules.children().join(",")
+    	  
+    	  */
+    	  
+    	  //def task = new File ("/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml")
+    	  def settings = load("/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Pending/Task.xml")
+    	  //echo "floopi: ${settings.floopi}"
     	  	      
 	      if (fileExists (task)){
 	      	echo task
