@@ -15,7 +15,7 @@ node{
 		echo "Connecting to freesurfer server to copy subject file"
 		sshagent(['id_rsa_fsf']) {      
 			def subject_data = new File ("/var/lib/jenkins/workspace/Freesurfer_recon_all/subject_file")  
-			sh "scp subject_data root@192.168.17.132:/usr/local/freesurfer/subjects/"
+			sh "scp $subject_data root@192.168.17.132:/usr/local/freesurfer/subjects/"
         }
      }
       
