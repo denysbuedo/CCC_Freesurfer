@@ -17,9 +17,15 @@ node{
       
      stage('RECON-ALL TASK') {
 	    
+	    echo "Connecting to Freesuefer server"
+	    
 	    sshagent(['id_rsa_fsf']) {        
+	    
             sh 'ssh root@192.168.17.132'     
-        }	
+            
+        }
+        
+        	
      }
       
      stage('DELIVERY RESULT') {
