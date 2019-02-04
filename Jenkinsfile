@@ -2,7 +2,7 @@ node{
 		
      //Read new task data
 	 echo "Reading the task data"
-     def tast_xml = readFile "$JENKINS_HOME/workspace/$JOB_NAME/Task.xml"
+     def tast_xml = readFile "$JENKINS_HOME/workspace/Freesurfer_recon_all/Task.xml"
 	 def parser = new XmlParser().parseText(tast_xml)
 	 def JOB_NAME = "${parser.attribute("job_name")}"
 	 def BUILD_ID ="${parser.attribute("build")}"
