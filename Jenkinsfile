@@ -2,7 +2,7 @@ node{
 		
      //Read new task data
 	 echo "Reading the task data"
-     def tast_xml = readFile "/var/lib/jenkins/workspace/ToolBox_Tasks/Freesurfer/Task.xml"
+     def tast_xml = readFile "$JENKINS_HOME/workspace/$JOB_NAME/Task.xml"
 	 def parser = new XmlParser().parseText(tast_xml)
 	 def JOB_NAME = "${parser.attribute("job_name")}"
 	 def BUILD_ID ="${parser.attribute("build")}"
@@ -27,7 +27,7 @@ node{
 			
 			echo "Remove task and subject file"
 			sh "rm -f $JENKINS_HOME/workspace/$JOB_NAME/$SUBJECT"
-			sh "rm -f $JENKINS_HOME/workspace/ToolBox_Tasks/Freesurfer/Task.xml"
+			sh "rm -f $JENKINS_HOME/workspace/$JOB_NAME/Task.xml"
         }
      }
       
