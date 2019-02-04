@@ -10,21 +10,20 @@ node{
 	 def SUBJECT="${parser.attribute("subject")}"
 	 def FSF_SUBJECT="${parser.attribute("fsf_output")}"
 	 
-	 echo JOB_NAME
-	 echo BUILD_ID
-	 echo OWNER
-	 echo SUBJECT
-	 echo FSF_SUBJECT
-     
+	 //Setting Build description
+	 currentBuild.displayName = "BUILD# $BUILD_ID- $OWNER"  
+	
+	 //Copy data from Jenkins Server to FreeSurfer Subject directory.
      stage('DATA ACQUISITION') {
-		//Setting Build
-		currentBuild.displayName = "BUILD# $BUILD_ID- $OWNER"  
 		
 		//Copy de Subject file to SUBJECT_DIR in Freesuerfer Server
 		echo "Connecting to freesurfer server to copy subject file"
 		sshagent(['id_rsa_fsf']) {      
-			def subject_data = new File ("$JENKINS_HOME/workspace/$JOB_NAME/subject_file") 
+			def subject_data = new File ("$JENKINS_HOME/workspace/$JOB_NAME/$SUBJECT")
 			sh "scp $subject_data root@192.168.17.132:/usr/local/freesurfer/subjects/"
+			
+			echo "Deleting task file from Jenkins Server"
+			sh "rm -f $JENKINS_HOME/workspace/$JOB_NAME/$SUBJECT " 
         }
      }
       
