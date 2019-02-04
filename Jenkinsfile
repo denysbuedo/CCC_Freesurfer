@@ -21,9 +21,12 @@ node{
 		sshagent(['id_rsa_fsf']) {      
 			//Create de subject file
 			def subject = new File ("$JENKINS_HOME/workspace/$JOB_NAME/$SUBJECT")
+			
+			echo "Copy de Subject file to SUBJECT_DIR in Freesuerfer Server" 
+			sh "scp $subject root@192.168.17.132:/usr/local/freesurfer/subjects/"
+			
 			echo "Deleting task file from Jenkins Server"
 			sh "rm -f $JENKINS_HOME/workspace/$JOB_NAME/$SUBJECT"
-			sh "scp $subject root@192.168.17.132:/usr/local/freesurfer/subjects/"
         }
      }
       
